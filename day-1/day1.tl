@@ -6,20 +6,23 @@ function isBlank(line: string): boolean
 end
 
 -- Inserts the elf into the list so that the list is ordered in descending calories sum
-function addElfInOrderToElfList(elfCaloriesList: {number}, caloriesCount: number)
+function addElfInOrderToElfList(elfCaloriesList: {number}, caloriesCount: number, maximumItems: integer)
     -- Remember - lua, and therefore teal, is 1-indexed
     local insertIndex = 1
-    while (insertIndex <= #elfCaloriesList) do
+    while (insertIndex <= math.min(#elfCaloriesList, maximumItems)) do
         if elfCaloriesList[insertIndex] <= caloriesCount then
             break
         end
         insertIndex = insertIndex + 1
     end
     table.insert(elfCaloriesList, insertIndex, caloriesCount)
+    while(#elfCaloriesList > maximumItems) do
+        table.remove(elfCaloriesList, #elfCaloriesList)
+    end
 end
 
 -- Generates the list of elves, ordered in descending calories sum
-function findOrderedElfList(filename: string): {number}
+function findOrderedElfList(filename: string, maximumItems: integer): {number}
     local infile = io.open(filename, "r")
 
     local currentLine: string = infile:read()
@@ -29,7 +32,7 @@ function findOrderedElfList(filename: string): {number}
     while (currentLine) do
         local strippedLine = currentLine.gsub(currentLine, " ", "")
         if(isBlank(currentLine)) then
-            addElfInOrderToElfList(sortedCaloriesList, currentCaloriesSum)
+            addElfInOrderToElfList(sortedCaloriesList, currentCaloriesSum, maximumItems)
             currentCaloriesSum = 0
         else
             -- Assuming here that input is well-formatted, so that it can easily be parsed
@@ -39,7 +42,7 @@ function findOrderedElfList(filename: string): {number}
     end
     -- Account for the end elf
     if(currentCaloriesSum > 0) then
-        addElfInOrderToElfList(sortedCaloriesList, currentCaloriesSum)
+        addElfInOrderToElfList(sortedCaloriesList, currentCaloriesSum, maximumItems)
     end
     infile:close()
     return sortedCaloriesList
@@ -47,12 +50,12 @@ end
 
 -- Finds the stats of the elf with most calories
 function solvePuzzlePartOne(filename: string): number
-    return findOrderedElfList(filename)[1]
+    return findOrderedElfList(filename, 1)[1]
 end
 
 -- Finds the total calories carried by the top three elves
 function solvePuzzlePartTwo(filename: string): number
-    local sortedCaloriesList = findOrderedElfList(filename)
+    local sortedCaloriesList = findOrderedElfList(filename, 3)
     local topThreeSum: number = 0
     for i=1,3 do
         local currentCaloriesSum = sortedCaloriesList[i]
