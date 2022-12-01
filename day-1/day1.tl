@@ -57,11 +57,8 @@ end
 function solvePuzzlePartTwo(filename: string): number
     local sortedCaloriesList = findOrderedElfList(filename, 3)
     local topThreeSum: number = 0
-    for i=1,3 do
-        local currentCaloriesSum = sortedCaloriesList[i]
-        if (currentCaloriesSum ~= nil) then
-            topThreeSum = topThreeSum + currentCaloriesSum
-        end
+    for _, currentCaloriesSum in ipairs(sortedCaloriesList) do
+        topThreeSum = topThreeSum + currentCaloriesSum
     end
     return topThreeSum
 end
