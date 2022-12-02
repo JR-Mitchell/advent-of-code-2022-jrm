@@ -1,6 +1,6 @@
 ---
 id: gbk8osgp3k09qbsaizgqb3y
-title: Day2
+title: Day 2
 desc: ''
 updated: 1670017096838
 created: 1670008702998
@@ -41,3 +41,43 @@ Giving us `f(x) = (x - 1)(9x - 6)/2`
 
 Therefore, the victory score is calculable using the expression:
 `((t - y) % 3 - 1) * (9 * (t - y) % 3 - 6) / 2`
+
+## Modifying this for part 2
+We have the rug pull moment, and it turns out that `XYZ` actually represent the match states - win, draw or loss.
+We should, however, be able to use very similar maths to solve this, just going in reverse.
+
+In this case, the mapping of results to numbers is Lose -> `1`, Draw -> `2`, Win -> `3`.
+From this, the victory score is easily calculable as `3(r - 1)`, where `r` is the match result.
+To calculate the value that you play, we first need a reverse map from these states `r` to the three values modulo 3 that we can calculate from.
+
+This needs to map `1 -> 1`, `2 -> 0` and `3 -> 2`.
+This will be in the form:
+
+`g(r) = (r - 2)(cr + d)`
+
+Plugging in our values:
+
+`g(3) = 3c + d = 2`
+
+`g(1) = -c - d = 1`
+
+=> `2c = 3` => `c = 3/2` => `d = -5/2`
+
+Giving us `g(r) = (r - 2)(3r - 5)/2`
+
+This will give us 1 for a loss, 0 for a draw, and 2 for a victory.
+Now, given the other player played a `t`, from our previous logic, we can work out that we played `y = (t - g(r))%3`
+This will give `y = t` for a draw, `y = (t - 1)%3` for a loss (remember, "each number is beaten by the number above it") and `y = (t + 1)%3` for a victory.
+This is all we need to recalculate our scores given this twist.
+
+## Uh-oh
+I got it wrong the first time.
+This is because my `y = (t - g(r))%3` gives a score of `0`, not `3`, for scissors.
+I should've checked my working!
+And annoyingly, this didn't come up for the test input.
+
+Consider `j(x) = x % 3`.
+For `x` from `-2` to `3`, this will give `1, 2, 0, 1, 2, 0`.
+Now consider `k(x) = (x - 1)%3 + 1`.
+For `x` from `-2` to `3`, this will give `1, 2, 3, 1, 2, 3`.
+So, this is in fact the method we want to use.

@@ -9,7 +9,7 @@ end
 function partTwoScoreCalculationMethod(theirPlayInt: integer, yourVictoryInt: integer): integer
     local victoryScore: integer = 3 * (yourVictoryInt - 1)
     local victoryIntMapped: integer = (yourVictoryInt - 2) * (3 * yourVictoryInt - 5) // 2
-    local yourPlayInt: integer = (theirPlayInt - victoryIntMapped) % 3
+    local yourPlayInt: integer = (theirPlayInt - victoryIntMapped - 1) % 3 + 1
     return yourPlayInt + victoryScore
 end
 
