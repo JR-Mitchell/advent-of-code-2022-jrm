@@ -19,3 +19,9 @@ I've also decided on this day to start formalising my tests.
 Previously, I've been running my code with an optional param allowing a different filename to be passed in, so that I can manually check my logic against the example data. This time, I'm not doing that, but explicitly running tests against the example data before solving my input, with the expected values for the example data hardcoded.
 
 Also, since it seems that basically every challenge will involve reading in lines of a file, I've reworked things slightly to add a method which will reduce code duplication in reading and processing a file line-by-line.
+
+### Part 2
+Now, we are comparing the characters in consecutive lines.
+Fortunately, similar pattern matching will help us out here.
+If we use Lua's `gmatch` to get all occurring matches, we can find the common characters between lines 1 and 2.
+Then, we can use this as a pattern for line 3, to find the character that matches all three.

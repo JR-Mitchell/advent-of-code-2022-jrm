@@ -27,6 +27,33 @@ function getSumOfDuplicatePriorities(filename: string): integer
     return prioritySum
 end
 
+function getGroupBadge(firstBackpack: string, secondBackpack: string, thirdBackpack: string): string
+    local sharedBetweenFirstTwo = ""
+    for character in string.gmatch(secondBackpack, "["..firstBackpack.."]") do
+        sharedBetweenFirstTwo = sharedBetweenFirstTwo .. character
+    end
+    local _, _, badge = string.find(thirdBackpack, "(["..sharedBetweenFirstTwo.."])")
+    return badge
+end
+
+function getSumOfBadgePriorities(filename: string): integer
+    local groupIndex: integer = 1
+    local groupLines: {string} = {nil, nil, nil}
+    local prioritySum: integer = 0
+    fileUtils.doForFileLines(
+        filename,
+        function(currentLine: string)
+            groupLines[groupIndex] = currentLine
+            groupIndex = groupIndex + 1
+            if(groupIndex == 4) then
+                groupIndex = 1
+                prioritySum = prioritySum + getPriority(getGroupBadge(table.unpack(groupLines)))
+            end
+        end
+    )
+    return prioritySum
+end
+
 function testPuzzlePartOne()
     local expected = 157
     local actual = getSumOfDuplicatePriorities(EXAMPLE_FILENAME)
@@ -38,11 +65,13 @@ function solvePuzzlePartOne()
 end
 
 function testPuzzlePartTwo()
-    error("Not yet implemented!")
+    local expected = 70
+    local actual = getSumOfBadgePriorities(EXAMPLE_FILENAME)
+    if(expected ~= actual) then error("Part two test failed. Expected: "..expected..", Actual: "..actual) end
 end
 
 function solvePuzzlePartTwo()
-    error("Not yet implemented!")
+    print("The sum of priorities of group badges is "..getSumOfBadgePriorities(FILENAME))
 end
 
 function main()
