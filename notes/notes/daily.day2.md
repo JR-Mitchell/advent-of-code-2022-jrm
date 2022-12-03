@@ -81,3 +81,34 @@ For `x` from `-2` to `3`, this will give `1, 2, 0, 1, 2, 0`.
 Now consider `k(x) = (x - 1)%3 + 1`.
 For `x` from `-2` to `3`, this will give `1, 2, 3, 1, 2, 3`.
 So, this is in fact the method we want to use.
+
+## Retrospective notes
+A couple of things have been pointed out to me in terms of improvements to my solution.
+
+Firstly, I calculated a representation of the match result using `(t - y) % 3`, which gives `0` for a draw, `1` for a loss, and `2` for a win.
+However, if I were to use `(y - t) % 3`, this would give `0` for a draw, `1` for a win, and `2` for a loss. From this, it can be seen that `(y - t + 1) % 3` gives `0` for a loss, `1` for a draw, and `2` for a win. This makes the maths much more simple, as now the victory score can be calculated simply as `3((y - t + 1) % 3)`.
+
+Then, for part two, rather than having to map `1 -> 1`, `2 -> 0` and `3 -> 2`, we instead have to map `1 -> 0`, `2 -> 1` and `3 -> 2`, which (trivially) is done by subtracting 1.
+Since we defined `r` from `y - t` in part 1 now, we should be able to find `y` from `r + t`.
+This should be `y = (r + t - 1) % 3 + 1`, where `r` is `0` for a draw, `1` for a win and `2` for a loss.
+
+I knew at the time that there was a way to do this using only one map!
+But I couldn't work out how.
+
+The final thing pointed out to me is that there are only 9 possible game states:
+```
+A X
+A Y
+A Z
+B X
+B Y
+B Z
+C X
+C Y
+C Z
+```
+and so it is much more efficient to cache the results for each state, so that rather than calculating a result 2500 times, you calculate a result a maximum of 9 times and then look it up at least 2491 times.
+
+You could even pre-calculate the results, and hardcode them - which, whilst it feels to me like a less elegant solution, is probably a *better* solution in almost every respect.
+It's fast, and doesn't involve messing around with a lot of complicated maths.
+All that it requires is noticing that there are only 9 possible game states, which I am frustrated I did not.
