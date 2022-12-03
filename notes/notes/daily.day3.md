@@ -17,3 +17,5 @@ I am however choosing to use an `if / else` here, since the bytes for `A-Z` are 
 ### General notes
 I've also decided on this day to start formalising my tests.
 Previously, I've been running my code with an optional param allowing a different filename to be passed in, so that I can manually check my logic against the example data. This time, I'm not doing that, but explicitly running tests against the example data before solving my input, with the expected values for the example data hardcoded.
+
+Also, since it seems that basically every challenge will involve reading in lines of a file, I've reworked things slightly to add a method which will reduce code duplication in reading and processing a file line-by-line.

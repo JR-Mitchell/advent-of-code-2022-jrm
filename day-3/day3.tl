@@ -1,5 +1,7 @@
-local FILENAME = "input.txt"
-local EXAMPLE_FILENAME = "example-input.txt"
+local FILENAME = string.gsub(debug.getinfo(1).short_src, "day3.tl", "input.txt")
+local EXAMPLE_FILENAME = string.gsub(debug.getinfo(1).short_src, "day3.tl", "example-input.txt")
+
+local fileUtils = require("fileUtils")
 
 function getPriority(character: string): integer
     local lowerCaseA = string.byte("a")
@@ -12,17 +14,16 @@ function getPriority(character: string): integer
 end
 
 function getSumOfDuplicatePriorities(filename: string): integer
-    local infile = io.open(filename, "r")
-    local currentLine: string = infile:read()
     local prioritySum: integer = 0
-    while (currentLine) do
-        local firstCompartment = string.sub(currentLine, 1, #currentLine // 2)
-        local secondCompartment = string.sub(currentLine, #currentLine // 2 + 1, -1)
-        local _, _, duplicateChar = string.find(secondCompartment, "(["..firstCompartment.."])")
-        prioritySum = prioritySum + getPriority(duplicateChar)
-        currentLine = infile:read()
-    end
-    infile:close()
+    fileUtils.doForFileLines(
+        filename,
+        function(currentLine: string)
+            local firstCompartment = string.sub(currentLine, 1, #currentLine // 2)
+            local secondCompartment = string.sub(currentLine, #currentLine // 2 + 1, -1)
+            local _, _, duplicateChar = string.find(secondCompartment, "(["..firstCompartment.."])")
+            prioritySum = prioritySum + getPriority(duplicateChar)
+        end
+    )
     return prioritySum
 end
 
