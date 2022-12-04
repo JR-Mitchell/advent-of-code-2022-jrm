@@ -14,7 +14,18 @@ Therefore, we'll have to ensure that our method can correctly solve multi-digit 
 Leaving that aside, for two pairs `a-b` and `c-d`, we know that one pair fully contains the other if `a <= b && c >= d`, or if `a >= b && c <= d`.
 
 ### Larger numbers
-It's a good job I created a bonus set of test data - I ran a test on this data and it failed.
+
+For reference, my bonus set of test data was:
+```
+20-40,60-80
+92-93,94-95
+155-197,167-189
+29-88,39-87
+60-65,40-69745
+21-69,4371-88523
+```
+
+It's a good job I created this bonus set of test data - I ran a test on this data and it failed.
 The pattern I was initially using to match the data was:
 
 `([%d+])%-([%d+]),([%d+])%-([%d+])`
