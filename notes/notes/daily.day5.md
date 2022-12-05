@@ -45,3 +45,7 @@ We can fix this by adding optional spaces to the start and end:
 `" ?[ %[ ][ A-Z ][ %] ]" ?`
 
 Another thing that I didn't consider is that the first number in a move command - i.e `"move a from b to c"` - could be more than a single digit.
+
+### Part 2
+Part 2 should be fairly simple to implement.
+We just need to change the `executeMove()` method to retain order when moving.
