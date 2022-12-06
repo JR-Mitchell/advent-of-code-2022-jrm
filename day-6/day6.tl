@@ -18,20 +18,37 @@ function getInitialChars(line: string, count: integer): {string}
     return chars
 end
 
-function indexOfFirstMatching(chars: {string}): integer
-    for i=#chars,2,-1 do
-        local thisChar = chars[i]
-        for j=i-1,1,-1 do
-            if(thisChar == chars[j]) then
-                return j
-            end
-        end
-    end
-    return nil
+function areAnyTwoTheSamePacket(chars: {string}): boolean
+    return chars[1] == chars[2] or chars[1] == chars[3] or chars[1] == chars[4]
+        or chars[2] == chars[3] or chars[2] == chars[4]
+        or chars[3] == chars[4]
+end
+
+function areAnyTwoTheSameMessage(chars: {string}): boolean
+    -- Brain needs coffee
+    return chars[1] == chars[2] or chars[1] == chars[3] or chars[1] == chars[4] or chars[1] == chars[5] or chars[1] == chars[6] or chars[1] == chars[7] or chars[1] == chars[8] or chars[1] == chars[9] or chars[1] == chars[10] or chars[1] == chars[11] or chars[1] == chars[12] or chars[1] == chars[13] or chars[1] == chars[14]
+        or chars[2] == chars[3] or chars[2] == chars[4] or chars[2] == chars[5] or chars[2] == chars[6] or chars[2] == chars[7] or chars[2] == chars[8] or chars[2] == chars[9] or chars[2] == chars[10] or chars[2] == chars[11] or chars[2] == chars[12] or chars[2] == chars[13] or chars[2] == chars[14]
+        or chars[3] == chars[4] or chars[3] == chars[5] or chars[3] == chars[6] or chars[3] == chars[7] or chars[3] == chars[8] or chars[3] == chars[9] or chars[3] == chars[10] or chars[3] == chars[11] or chars[3] == chars[12] or chars[3] == chars[13] or chars[3] == chars[14]
+        or chars[4] == chars[5] or chars[4] == chars[6] or chars[4] == chars[7] or chars[4] == chars[8] or chars[4] == chars[9] or chars[4] == chars[10] or chars[4] == chars[11] or chars[4] == chars[12] or chars[4] == chars[13] or chars[4] == chars[14]
+        or chars[5] == chars[6] or chars[5] == chars[7] or chars[5] == chars[8] or chars[5] == chars[9] or chars[5] == chars[10] or chars[5] == chars[11] or chars[5] == chars[12] or chars[5] == chars[13] or chars[5] == chars[14]
+        or chars[6] == chars[7] or chars[6] == chars[8] or chars[6] == chars[9] or chars[6] == chars[10] or chars[6] == chars[11] or chars[6] == chars[12] or chars[6] == chars[13] or chars[6] == chars[14]
+        or chars[7] == chars[8] or chars[7] == chars[9] or chars[7] == chars[10] or chars[7] == chars[11] or chars[7] == chars[12] or chars[7] == chars[13] or chars[7] == chars[14]
+        or chars[8] == chars[9] or chars[8] == chars[10] or chars[8] == chars[11] or chars[8] == chars[12] or chars[8] == chars[13] or chars[8] == chars[14]
+        or chars[9] == chars[10] or chars[9] == chars[11] or chars[9] == chars[12] or chars[9] == chars[13] or chars[9] == chars[14]
+        or chars[10] == chars[11] or chars[10] == chars[12] or chars[10] == chars[13] or chars[10] == chars[14]
+        or chars[11] == chars[12] or chars[11] == chars[13] or chars[11] == chars[14]
+        or chars[12] == chars[13] or chars[12] == chars[14]
+        or chars[13] == chars[14]
 end
 
 function areAnyTwoTheSame(chars: {string}): boolean
-    return indexOfFirstMatching(chars) ~= nil
+    if(#chars == MESSAGE_MARKER_LENGTH) then
+        return areAnyTwoTheSameMessage(chars)
+    elseif(#chars == PACKET_MARKER_LENGTH) then
+        return areAnyTwoTheSamePacket(chars)
+    else
+        error("Not yet implemented for a list of length "..#chars)
+    end
 end
 
 function getFirstMarkerIndex(line: string, distinctCount: integer): integer
