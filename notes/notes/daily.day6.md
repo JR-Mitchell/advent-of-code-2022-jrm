@@ -25,3 +25,8 @@ The smarter and faster way to do this is the following:
 - If you get down to element `1` in the list, you know you are done.
 
 I will implement this later, when I take a coffee break.
+
+### Coming back to this with coffee
+I actually almost accidentally solved this without fully doing the optimisation above.
+So, I'm going to commit this work as it was when I submitted the solution.
+I will then make a separate commit to the optimisation branch with the full optimisation.
