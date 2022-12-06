@@ -30,17 +30,17 @@ function indexOfFirstMatching(chars: {string}): integer
     return nil
 end
 
-function areAnyTwoTheSame(chars: {string}): boolean
-    return indexOfFirstMatching(chars) ~= nil
-end
-
 function getFirstMarkerIndex(line: string, distinctCount: integer): integer
     local chars = getInitialChars(line, distinctCount)
     local currentIndex = distinctCount
-    while(areAnyTwoTheSame(chars)) do
-        currentIndex = currentIndex + 1
-        table.remove(chars, 1)
-        table.insert(chars, getCharAt(line, currentIndex))
+    local matchIndex = indexOfFirstMatching(chars)
+    while(matchIndex ~= nil) do
+        for _=1,matchIndex do
+            currentIndex = currentIndex + 1
+            table.remove(chars, 1)
+            table.insert(chars, getCharAt(line, currentIndex))
+        end
+        matchIndex = indexOfFirstMatching(chars)
     end
     return currentIndex
 end
