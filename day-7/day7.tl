@@ -8,6 +8,8 @@ local DIR_PATTERN <const> = "dir ([a-zA-Z]+)"
 local FILE_PATTERN <const> = "(%d+) ([a-zA-Z.]+)"
 
 local PART_ONE_DIR_SIZE <const> = 100000
+local PART_TWO_FILESYSTEM_SIZE <const> = 70000000
+local PART_TWO_REQUIRED_SPACE <const> = 30000000
 
 local record File
     size: integer
@@ -137,12 +139,28 @@ function solvePuzzlePartOne()
     print("The sum of the total sizes of directories with total size smaller than "..PART_ONE_DIR_SIZE.." is "..sumSizePartOne(FILENAME))
 end
 
+function getDirectoryToDelete(filename: string): Directory
+    local dirsList = parseDirStructure(filename)
+    local root = dirsList[1]
+    local availableSpace = PART_TWO_FILESYSTEM_SIZE - getSizeOf(root)
+    local requiredToDelete = PART_TWO_REQUIRED_SPACE - availableSpace
+    local dirToDelete: Directory = nil
+    for _, dir in ipairs(dirsList) do
+        if(getSizeOf(dir) >= requiredToDelete and (dirToDelete == nil or getSizeOf(dir) < getSizeOf(dirToDelete))) then
+            dirToDelete = dir
+        end
+    end
+    return dirToDelete
+end
+
 function testPuzzlePartTwo()
-    error("Not yet implemented!")
+    local expected = "d"
+    local actual = getDirectoryToDelete(EXAMPLE_FILENAME).name
+    if(expected ~= actual) then error("Part two test failed. Expected: "..expected..", Actual: "..actual) end
 end
 
 function solvePuzzlePartTwo()
-    error("Not yet implemented!")
+    print("The name of the smallest directory to delete in order to have "..PART_TWO_REQUIRED_SPACE.." free space is "..getDirectoryToDelete(FILENAME).name)
 end
 
 function main()

@@ -11,3 +11,8 @@ I'm just going to use OOP to find a valid solution.
 
 My solution is definitely imperfect.
 But, it gives the correct answer - and that's what counts, right?
+
+### Part 2
+This should be easy enough with what I've already put in place.
+
+Words typed too soon, I got an incorrect answer (despite the test passing)...
