@@ -154,13 +154,13 @@ function getDirectoryToDelete(filename: string): Directory
 end
 
 function testPuzzlePartTwo()
-    local expected = "d"
-    local actual = getDirectoryToDelete(EXAMPLE_FILENAME).name
+    local expected = 24933642
+    local actual = getSizeOf(getDirectoryToDelete(EXAMPLE_FILENAME))
     if(expected ~= actual) then error("Part two test failed. Expected: "..expected..", Actual: "..actual) end
 end
 
 function solvePuzzlePartTwo()
-    print("The name of the smallest directory to delete in order to have "..PART_TWO_REQUIRED_SPACE.." free space is "..getDirectoryToDelete(FILENAME).name)
+    print("The size of the smallest directory to delete in order to have "..PART_TWO_REQUIRED_SPACE.." free space is "..getSizeOf(getDirectoryToDelete(FILENAME)))
 end
 
 function main()

@@ -16,3 +16,8 @@ But, it gives the correct answer - and that's what counts, right?
 This should be easy enough with what I've already put in place.
 
 Words typed too soon, I got an incorrect answer (despite the test passing)...
+
+### The mistake
+I got an incorrect answer because I provided the wrong piece of information!
+I was outputting the name of the directory, whereas the question asks for its total size.
+This is easily fixed.
